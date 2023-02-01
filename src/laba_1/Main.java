@@ -1,19 +1,20 @@
 package laba_1;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        Number a = new Number(2, 3);
-        Number b = new Number(-1, 1);
-        a = a.multiply(b);
+        Number2 a = new Complex(5,-3);
+        Number2 b = new Complex(2,8);
+        Number2 c = a.multiply(b);
         a.print();
-        Number c = new Number(1, -1);
-        Number d = new Number(1, 1);
+        b.print();
         c.print();
-        d.print();
-        Number e = new Number(1, -2);
-        e.print();
-        Number f = new Number(1, 0);
-        f.print();
+
+
+        System.out.println("\nMatrix part of output");
+        Matrix m = new Matrix();
+        m.getSize();
+        m.getMatrix();
+        m.print();
     }
 }

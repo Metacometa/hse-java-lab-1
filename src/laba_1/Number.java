@@ -54,16 +54,16 @@ public class Number {
     }
     public void print() {
         if (this.bi == 0) {
-            System.out.println(this.a);
+            System.out.print(this.a);
         }
         else if (Math.abs(this.bi) == 1) {
-            System.out.println(this.a + " " + this.sign(this.bi) + " i");
+            System.out.print(this.a + " " + this.sign(this.bi) + " i");
         }
         else if (this.bi > 0) {
-            System.out.println(this.a + " + " + this.bi + "i");
+            System.out.print(this.a + " + " + this.bi + "i");
         }
         else {
-            System.out.println(this.a + " - " + (-this.bi) + "i");
+            System.out.print(this.a + " - " + (-this.bi) + "i");
         }
     }
 
