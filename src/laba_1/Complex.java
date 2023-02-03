@@ -3,39 +3,35 @@ package laba_1;
 import java.util.Scanner;
 
 public class Complex extends Real {
-    private float b;
+    private double b;
 
     //Constructors
     Complex() {
-        this.b = 0;
+        super();
     }
-    Complex(float a, float b) {
+    Complex(double a, double b) {
         super(a);
         this.b = b;
     }
 
     //Math operations
-    public Number2 add(Number2 addition) {
-        if (addition instanceof Complex) {
-            Complex a = (Complex) addition;
+    public Number add(Number addition) {
+        if (addition instanceof Complex a) {
             return new Complex(this.getA() + a.getA(), this.getB() + a.getB());
         }
-        else if (addition instanceof Real) {
-            Real a = (Real) addition;
+        else if (addition instanceof Real a) {
             return new Complex(this.getA() + a.getA(), this.getB());
         }
         return new Complex();
     }
 
-    public Number2 multiply(Number2 multiplier) {
-        if (multiplier instanceof Complex) {
-            Complex m = (Complex) multiplier;
-            System.out.println("ALL IS CORRECT");;
+    public Number multiply(Number multiplier) {
+        if (multiplier instanceof Complex m) {
+            System.out.println("ALL IS CORRECT");
             return new Complex(this.getA() * m.getA() - this.getB() * m.getB(),
                     this.getA() * m.getB() + this.getB() * m.getA());
         }
-        else if (multiplier instanceof Real) {
-            Real m = (Real) multiplier;
+        else if (multiplier instanceof Real m) {
             return new Complex(this.getA() * m.getA(), this.getB() * m.getA());
         }
 
@@ -53,9 +49,25 @@ public class Complex extends Real {
     public void print() {
         System.out.print(this.getA() + " + " + this.getB() + "i");
     }
+    public void printTrigonometric() {
+        double r = Math.sqrt(this.getA() * this.getA() + this.getB() * this.getB());
+        double t = Math.abs(Math.atan(this.getB() / this.getA()))    * 180 / Math.PI;
+        if (this.getA() < 0 && this.getB() < 0) {
+            t = 180 + t;
+        }
+        else if (this.getA() < 0) {
+            System.out.println(2);
+            t = 180 - t;
+        }
+        else if (this.getB() < 0) {
+
+            t = 360 - t;
+        }
+        System.out.println(r + " * (cos(" + t + ") + i*sin(" + t +"))");
+    }
 
     //Getters
-    public float getB() {
+    public double getB() {
         return b;
     }
 
