@@ -1,13 +1,27 @@
 package laba_1;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Class that implements Real numbers
+ */
 public class Real extends Number {
+    /**
+     * All class Real is just wrapper for this real value
+     * */
     private double a;
 
     //Constructors
+    /**
+    * Default constructor that activates user input of a real number
+    */
     Real() {
         this.input();
     }
+    /**
+     * This constructor gets predefined values
+     * @param a a to set
+     */
     Real(double a) {
         this.a = a;
     }
@@ -33,21 +47,40 @@ public class Real extends Number {
     }
 
     //User input / output
+
+    /**
+     * @exception InputMismatchException if inappropriate value was entered;
+     */
     public void input() {
-        System.out.println("Enter a real number: ");
-        Scanner input = new Scanner(System.in);
-        this.setA(input.nextFloat());
+        Scanner input;
+        while(true) {
+            input = new Scanner(System.in);
+            System.out.println("Enter a real number: ");
+            try {
+                this.setA(input.nextFloat());
+                break;
+            }
+            catch (InputMismatchException exception){
+                System.out.println("You entered inappropriate value, enter again!");
+            }
+        }
     }
     public void print() {
         System.out.print(this.getA());
     }
 
     //Getters
+    /**
+     * @return real value
+     */
     public double getA() {
         return a;
     }
 
     //Setters
+    /**
+     * @param a a to set
+     */
     public void setA(float a) {
         this.a = a;
     }
