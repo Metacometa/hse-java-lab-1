@@ -16,12 +16,4 @@ public abstract class Number {
      * @return multiplication two numbers
      **/
     public abstract Number multiply(Number multiplier);
-    /**
-     * Gets user input of a number
-     **/
-    public abstract void input();
-    /**
-     * Prints a number for user
-     **/
-    public abstract void print();
 }

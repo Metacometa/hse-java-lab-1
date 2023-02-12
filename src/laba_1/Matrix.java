@@ -5,7 +5,13 @@ import java.util.Scanner;
  * Class that implements Matrix
  */
 public class Matrix {
+    /**
+     * Keeps Complex and Real values of matrix
+     */
     private Number[][] matrix;
+    /**
+     * Size of matrix
+     */
     private int rows, columns;
 
     //Constructors
@@ -13,10 +19,10 @@ public class Matrix {
      * Default constructor that activates user input of a matrix
      */
     Matrix() {
-        this.inputSize();
-        this.input();
+        this.rows = 0;
+        this.columns = 0;
+        this.matrix = null;
     }
-
     /**
      * This constructor gets predefined matrix size
      * @param rows rows to set
@@ -28,7 +34,7 @@ public class Matrix {
         this.matrix = new Number[this.rows][this.columns];
     }
 
-    //math operations
+    //Math operations
     /**
      * Sum operation
      * @param a is adding up with source matrix
@@ -72,7 +78,6 @@ public class Matrix {
             return resultMatrix;
         }
     }
-
     /**
      * Transposing operation
      */
@@ -89,86 +94,47 @@ public class Matrix {
         this.matrix = transposedMatrix.matrix;
     }
 
-    //User input / output
-    /**
-     * Gets user input of rows and columns of matrix
-     **/
-    private void inputSize() {
-        System.out.println("Entering the matrix:");
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter number of rows");
-        this.setRows(in.nextInt());
-        System.out.println("Enter number of columns");
-        this.setColumns(in.nextInt());
-
-        this.matrix = new Number[this.rows][this.columns];
-    }
-    /**
-     * Gets user input of matrix values
-     **/
-    private void input() {
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < columns; ++j) {
-                System.out.println("Enter the number in Matrix[" + i + "][" + j + "]");
-
-                Scanner in = new Scanner(System.in);
-                while (true) {
-                    System.out.println("Enter 'R' for real number and 'C' for complex:");
-                    String type = in.nextLine();
-                    if (type.equals("R")) {
-                        matrix[i][j] = new Real();
-                        break;
-                    }
-                    else if (type.equals("C")) {
-                        matrix[i][j] = new Complex();
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    /**
-     * Prints a matrix for user
-     **/
-    public void print() {
-        for (int i = 0; i < this.rows; ++i) {
-            for (int j = 0; j < this.columns; ++j) {
-                this.matrix[i][j].print();
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
-    }
-
     //Getters
-
     /**
      * @return number of rows
      */
     public int getRows() {
         return rows;
     }
-
     /**
      * @return number of columns
      */
     public int getColumns() {
         return columns;
     }
+    /**
+     * @param i index of a row
+     * @param j index of a column
+     * @return value by indexes
+     */
+    public Number getElement(int i, int j) {
+        return matrix[i][j];
+    }
 
     //Setters
-
     /**
      * @param rows rows to set
      */
     public void setRows(int rows) {
         this.rows = rows;
     }
-
     /**
      * @param columns columns to set
      */
     public void setColumns(int columns) {
         this.columns = columns;
+    }
+    /**
+     * @param i index of a row
+     * @param j index of a column
+     * @param element to set by indexes
+     */
+    public void setElement(int i, int j, Number element) {
+        this.matrix[i][j] = element;
     }
 }

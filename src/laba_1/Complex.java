@@ -11,11 +11,13 @@ public class Complex extends Real {
      * All class is a wrapper for this imaginary value
      */
     private double b;
+
     /**
      * Default constructor that activates user input of a complex number
      */
     Complex() {
         super();
+        this.b = 0;
     }
     /**
      * This constructor gets predefined values
@@ -37,7 +39,6 @@ public class Complex extends Real {
         }
         return new Complex();
     }
-
     public Number multiply(Number multiplier) {
         if (multiplier instanceof Complex m) {
             System.out.println("ALL IS CORRECT");
@@ -51,43 +52,10 @@ public class Complex extends Real {
         return new Real();
     }
 
-    //User input / output
     /**
-     * @exception InputMismatchException if inappropriate value was entered;
+     * This method return complex number in a trigonometric form in String
      */
-    public void input() {
-        Scanner input;
-        while(true) {
-            input = new Scanner(System.in);
-            System.out.println("Enter a real part: ");
-            try {
-                this.setA(input.nextFloat());
-                break;
-            }
-            catch (InputMismatchException exception){
-                System.out.println("You entered inappropriate value");
-            }
-        }
-        while(true) {
-            input = new Scanner(System.in);
-            System.out.println("Enter an imaginary part: ");
-            try {
-                this.setB(input.nextFloat());
-                break;
-            }
-            catch (InputMismatchException exception){
-                System.out.println("You entered inappropriate value");
-            }
-        }
-    }
-    public void print() {
-        System.out.print(this.getA() + " + " + this.getB() + "i");
-    }
-
-    /**
-     * This method prints complex number in a trigonometric form
-     */
-    public void printTrigonometric() {
+    public String printTrigonometric() {
         double r = Math.sqrt(this.getA() * this.getA() + this.getB() * this.getB());
         double t = Math.abs(Math.atan(this.getB() / this.getA()))    * 180 / Math.PI;
         if (this.getA() < 0 && this.getB() < 0) {
@@ -101,7 +69,7 @@ public class Complex extends Real {
 
             t = 360 - t;
         }
-        System.out.println(r + " * (cos(" + t + ") + i*sin(" + t +"))");
+        return r + " * (cos(" + t + ") + i*sin(" + t +"))";
     }
 
     //Getters
@@ -114,6 +82,7 @@ public class Complex extends Real {
     /**
      * @param b imaginary part to set
      */
+
     //Setters
     public void setB(float b) {
         this.b = b;

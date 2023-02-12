@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class Real extends Number {
     /**
-     * All class Real is just wrapper for this real value
+     * Сlass Real is just wrapper for this real value
      * */
     private double a;
 
@@ -16,7 +16,7 @@ public class Real extends Number {
     * Default constructor that activates user input of a real number
     */
     Real() {
-        this.input();
+        this.a = 0;
     }
     /**
      * This constructor gets predefined values
@@ -46,29 +46,6 @@ public class Real extends Number {
         return new Real();
     }
 
-    //User input / output
-
-    /**
-     * @exception InputMismatchException if inappropriate value was entered;
-     */
-    public void input() {
-        Scanner input;
-        while(true) {
-            input = new Scanner(System.in);
-            System.out.println("Enter a real number: ");
-            try {
-                this.setA(input.nextFloat());
-                break;
-            }
-            catch (InputMismatchException exception){
-                System.out.println("You entered inappropriate value, enter again!");
-            }
-        }
-    }
-    public void print() {
-        System.out.print(this.getA());
-    }
-
     //Getters
     /**
      * @return real value
@@ -76,7 +53,6 @@ public class Real extends Number {
     public double getA() {
         return a;
     }
-
     //Setters
     /**
      * @param a a to set
@@ -84,5 +60,4 @@ public class Real extends Number {
     public void setA(float a) {
         this.a = a;
     }
-
 }
