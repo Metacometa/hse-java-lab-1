@@ -23,14 +23,68 @@ public class ConsoleNumberHandler {
             }
         }
     }
+    public static Number getNumber(String input) {
+        int index = 0;
+        boolean realPartGotten = false;
+        boolean plusSignGotten = false;
+        boolean imaginaryPartStarted = false;
+        String temp = "";
+        for (int i = 0; i < input.length(); ++i) {
+            if (!realPartGotten) {
+                if (input.charAt(i) >= '0' && input.charAt(i) <= '9') {
+                    temp += input.charAt(i);
+                }
+                else if (input.charAt(i) == '+' || input.charAt(i) == ' ') {
+                    realPartGotten = true;
+                    temp = "";
+                }
+                else {
+                    throw new NumberFormatException("Incorrect number format");
+                }
+            }
+            else if (!plusSignGotten) {
+                if (input.charAt(i) == '+') {
+                    plusSignGotten = true;
+                    break;
+                }
+                else if (input.charAt(i) != ' ') {
+                    throw new NumberFormatException("Incorrect number format");
+                }
+            }
+            else if (!imaginaryPartStarted) {
+                if (input.charAt(i) == 'i' || (input.charAt(i) >= '0' && input.charAt(i) <= '9')) {
+                    imaginaryPartStarted = true;
+                    temp += input.charAt(i);
+                }
+                else if (input.charAt(i) != ' ') {
+                    throw new NumberFormatException("Incorrect complex number format");
+                }
+            }
+            else {
+                if (input.charAt(i) >= '0' && input.charAt(i) <= '9') {
+
+                }
+                if (input.charAt(i) == 'i' && i != input.length() - 1) {
+
+                }
+
+            }
+        }
+
+        if (realPartGotten && plusSignGotten) {
+
+        }
+        return null;
+        // throw new NumberFormatException();
+    }
+
     /**
      * @exception InputMismatchException if inappropriate value was entered;
      */
     public static float[] inputComplex() {
-        Scanner input;
+        Scanner input = new Scanner(System.in);
         float complex[] = new float[2];
         while(true) {
-            input = new Scanner(System.in);
             System.out.println("Enter a real part: ");
             try {
                 complex[0] = input.nextFloat();
@@ -41,7 +95,6 @@ public class ConsoleNumberHandler {
             }
         }
         while(true) {
-            input = new Scanner(System.in);
             System.out.println("Enter an imaginary part: ");
             try {
                 complex[1] = input.nextFloat();
@@ -57,9 +110,8 @@ public class ConsoleNumberHandler {
      * @exception InputMismatchException if inappropriate value was entered;
      */
     public static float inputReal() {
-        Scanner input;
+        Scanner input = new Scanner(System.in);
         while(true) {
-            input = new Scanner(System.in);
             System.out.println("Enter a real number: ");
             try {
                 return input.nextFloat();
