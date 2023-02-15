@@ -1,4 +1,4 @@
-import laba_1.ConsoleHandler;
+import complex_and_matrices.ConsoleHandler;
 
 public class Main {
     public static void main(String[] args) {

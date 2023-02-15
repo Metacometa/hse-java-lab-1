@@ -1,4 +1,4 @@
-package laba_1;
+package complex_and_matrices;
 
 /**
  * Parent class for real and complex numbers
@@ -13,7 +13,7 @@ public abstract class Number {
     /**
      * Multiply operation
      * @param multiplier is multiplied by source number
-     * @return multiplication two numbers
+     * @return multiplication of two numbers
      **/
     public abstract Number multiply(Number multiplier);
 }

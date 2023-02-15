@@ -1,6 +1,5 @@
-package laba_1;
+package complex_and_matrices;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -23,26 +22,35 @@ public class ConsoleHandler {
         Scanner in = new Scanner(System.in);
         this.numbers = new HashMap<>();
         this.matrices = new HashMap<>();
+        printHelp();
         main_loop: while(true) {
-            System.out.println("Write \"Print help\" for getting all commands");
             switch(in.nextLine()) {
+                case "Print help":
+                    printHelp();
+                    break;
                 case "New number":
                     newNumber();
-                    break;
-                case "Add number":
-                    numberOperate("Add");
-                    break;
-                case "Multiply number":
-                    numberOperate("Multiply");
                     break;
                 case "New matrix":
                     newMatrix();
                     break;
+                case "Add number":
+                    operateNumber("Add");
+                    break;
+                case "Multiply number":
+                    operateNumber("Multiply");
+                    break;
                 case "Add matrix":
-                    matrixOperate("Add");
+                    operateMatrix("Add");
                     break;
                 case "Multiply matrix":
-                    matrixOperate("Multiply");
+                    operateMatrix("Multiply");
+                    break;
+                case "Transpose matrix":
+                    transposeMatrix();
+                    break;
+                case "Find determinant":
+                    printDeterminant();
                     break;
                 case "Print all":
                     printNumbers();
@@ -55,23 +63,61 @@ public class ConsoleHandler {
                 case "Print matrices":
                     printMatrices();
                     break;
-                case "Print trigonometric complex":
+                case "Print complex numbers trigonometrically":
                     ConsoleNumberHandler.printComplexTrigonometric(this.numbers);
-                    break;
-                case "Print help":
-                    printHelp();
                     break;
                 case "Stop":
                     break main_loop;
-                    default:
+                default:
+                    System.out.println("Incorrect command");
+                    break;
             }
+            System.out.println("Write \"Print help\" for getting all commands");
         }
+    }
+    /**
+     * Print all based command for controlling of matrices and numbers via console
+     */
+    private static void printHelp() {
+        System.out.println("Available commands:\n" +
+                "\"Print help\"\n" +
+                "\"New number/matrix\"\n" +
+                "\"Add number/matrix\"\n" +
+                "\"Multiply number/matrix\"\n" +
+                "\"Transpose matrix\"\n" +
+                "\"Find determinant\"\n" +
+                "\"Print all/matrices/numbers/complex numbers trigonometrically\"\n" +
+                "\"Stop\"");
+    }
+    /**
+     * User input of a new number
+     */
+    private void newNumber() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter name of a new number:");
+        String name = getName(in);
+        System.out.println("Enter number \"" + name + "\":");
+        this.numbers.put(name, ConsoleNumberHandler.inputNumber());
+        System.out.print("\"" + name + "\" = ");
+        ConsoleNumberHandler.printNumber(this.numbers.get(name));
+        System.out.println();
+    }
+    /**
+     * User input of a new matrix
+     */
+    private void newMatrix() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Enter name of a new object:");
+        String name = getName(in);
+        this.matrices.put(name, ConsoleMatrixHandler.inputMatrix(name));
+        System.out.println("\"" + name + "\" = ");
+        ConsoleMatrixHandler.printMatrix(this.matrices.get(name));
     }
     /**
      * This method implements console management of adding or multiplication of numbers
      * @param operation defines add or multiply will be done
      */
-    public void numberOperate(String operation) {
+    private void operateNumber(String operation) {
         Scanner in = new Scanner(System.in);
         String resultName;
         String operationName = "";
@@ -86,7 +132,7 @@ public class ConsoleHandler {
                 variableName = "multiplier";
                 break;
         }
-        System.out.println("Enter name of variable for " + operationName + ":");
+        System.out.println("Enter name of variable for resulting " + operationName + ":");
         resultName = in.nextLine();
 
         System.out.println("Enter name of first " + variableName + ":");
@@ -127,10 +173,11 @@ public class ConsoleHandler {
         this.numbers.put(resultName, result);
     }
     /**
-     * This method implements console management of adding or multiplication of numbers
+     * This method implements console management of adding or multiplication of matrices
      * @param operation defines add or multiply will be done
+     * @exception IllegalArgumentException if matrices with not corresponding sizes are being multiplied or summarising
      */
-    public void matrixOperate(String operation) {
+    private void operateMatrix(String operation) {
         Scanner in = new Scanner(System.in);
         String resultName;
         String operationName = "";
@@ -145,7 +192,7 @@ public class ConsoleHandler {
                 variableName = "multiplied matrix";
                 break;
         }
-        System.out.println("Enter name of variable for " + operationName + ":");
+        System.out.println("Enter name of variable for resulting " + operationName + ":");
         resultName = in.nextLine();
 
         System.out.println("Enter name of first " + variableName + ":");
@@ -173,10 +220,16 @@ public class ConsoleHandler {
         try {
             switch(operation) {
                 case "Add":
+                    if (firstValue.getRows() != secondValue.getRows() || firstValue.getColumns() != secondValue.getColumns()) {
+                        throw new IllegalArgumentException("Matrices can't be added");
+                    }
                     result = firstValue.add(secondValue);
                     System.out.println(resultName + " = " + firstName + " + " + secondName + " = ");
                     break;
                 case "Multiply":
+                    if (firstValue.getColumns() != secondValue.getRows()) {
+                        throw new IllegalArgumentException("Matrices can't be multiplied");
+                    }
                     result = firstValue.multiply(secondValue);
                     System.out.println(resultName + " = " + firstName + " * " + secondName + " = ");
                     break;
@@ -191,7 +244,70 @@ public class ConsoleHandler {
             System.out.println("Incorrect sizes of matrices");
         }
     }
-    public void printMatrices() {
+    /**
+     * This method implements console management of matrix transposing
+     */
+    private void transposeMatrix() {
+        System.out.println("Enter the name of matrix that will be transposed");
+        Scanner in = new Scanner(System.in);
+        String name = in.nextLine();
+
+        if (this.matrices.containsKey(name)) {
+            Matrix value = this.matrices.get(name);
+            System.out.println("\"" + name + "\" = ");
+            ConsoleMatrixHandler.printMatrix(value);
+            System.out.println("-->");
+            value.transpose();
+            ConsoleMatrixHandler.printMatrix(value);
+        }
+        else {
+            System.out.println("Entered matrix name does not exist.");
+        }
+    }
+    /**
+     * This method implements console management of determinant calculating
+     */
+    private void printDeterminant() {
+        System.out.println("Enter the name of matrix:");
+        Scanner in = new Scanner(System.in);
+        Matrix value;
+        String name = in.nextLine();
+        if (this.matrices.isEmpty()) {
+            System.out.println("There is no created matrix");
+            return;
+        }
+        if (this.matrices.containsKey(name)) {
+            value = this.matrices.get(name);
+            if (value.getColumns() == value.getColumns()) {
+                ConsoleMatrixHandler.printDeterminant(value, name);
+            }
+            else {
+                System.out.println("Determinant of this matrix does not exist.");
+            }
+        }
+        else {
+            System.out.println("Entered matrix name does not exist.");
+        }
+        name = in.nextLine();
+
+    }
+    /**
+     * This method simply prints the number to console
+     */
+    private void printNumbers() {
+        System.out.println("Numbers:");
+        for (Map.Entry<String, Number> entry: this.numbers.entrySet()) {
+            String key = entry.getKey();
+            Number value = entry.getValue();
+            System.out.print("\"" + key + "\" = ");
+            ConsoleNumberHandler.printNumber(value);
+            System.out.println();
+        }
+    }
+    /**
+     * This method simply prints the matrix to console
+     */
+    private void printMatrices() {
         System.out.println("Matrices:");
         for (Map.Entry<String, Matrix> entry: this.matrices.entrySet()) {
             String key = entry.getKey();
@@ -201,46 +317,30 @@ public class ConsoleHandler {
             System.out.println();
         }
     }
-    public void newMatrix() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter name of a new object:");
-        String name = in.nextLine();
-        this.matrices.put(name, ConsoleMatrixHandler.inputMatrix());
-    }
-    /**
-     * Print all based command for controlling of matrices and numbers via console
-     */
-    public static void printHelp() {
-        System.out.println("Available commands:\n " +
-                "\"New number\"\n " +
-                "\"Add number\"\n " +
-                "\"Multiply number\"\n " +
-                "\"New matrix\"\n " +
-                "\"Print all\"\n " +
-                "\"Print name\"\n " +
-                "\"Print matrices\"\n " +
-                "\"Print numbers\"\n " +
-                "\"Print trigonometric complex\"\n " +
-                "\"Print help\"\n " +
-                "\"Stop\"");
-    }
-    /**
-     * User input of a new number
-     */
-    public void newNumber() {
-        Scanner in = new Scanner(System.in);
-        System.out.println("Enter name of a new number:");
-        String name = in.nextLine();
-        this.numbers.put(name, ConsoleNumberHandler.inputNumber());
-    }
-    public void printNumbers() {
-        System.out.println("Numbers:");
-        for (Map.Entry<String, Number> entry: this.numbers.entrySet()) {
-            String key = entry.getKey();
-            Number value = entry.getValue();
-            System.out.print("\"" + key + "\" = ");
-            ConsoleNumberHandler.printNumber(value);
-            System.out.println();
+
+    //Util
+    private static String getName(Scanner in) {
+        boolean incorrect;
+        String name;
+        while(true) {
+            incorrect = false;
+            name = in.nextLine();
+            if (name.isEmpty()) {
+                incorrect = true;
+            }
+            for (int i = 0; i < name.length(); ++i) {
+                if (name.charAt(i) < 'A' || (name.charAt(i) > 'Z' && name.charAt(i) < 'a')
+                         || name.charAt(i) > 'z') {
+                    incorrect = true;
+                    break;
+                }
+            }
+            if (!incorrect) {
+                return name;
+            }
+            else {
+                System.out.println("Name must consists only from letters, write it again:");
+            }
         }
     }
 }

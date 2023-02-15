@@ -1,6 +1,4 @@
-package laba_1;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+package complex_and_matrices;
 
 /**
  * Class that implements Real numbers

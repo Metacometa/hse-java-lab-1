@@ -1,7 +1,4 @@
-package laba_1;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
+package complex_and_matrices;
 
 /**
  * Class that implements Complex numbers
@@ -41,7 +38,6 @@ public class Complex extends Real {
     }
     public Number multiply(Number multiplier) {
         if (multiplier instanceof Complex m) {
-            System.out.println("ALL IS CORRECT");
             return new Complex(this.getA() * m.getA() - this.getB() * m.getB(),
                     this.getA() * m.getB() + this.getB() * m.getA());
         }
@@ -55,7 +51,7 @@ public class Complex extends Real {
     /**
      * This method return complex number in a trigonometric form in String
      */
-    public String printTrigonometric() {
+    public String getTrigonometricForm() {
         double r = Math.sqrt(this.getA() * this.getA() + this.getB() * this.getB());
         double t = Math.abs(Math.atan(this.getB() / this.getA()))    * 180 / Math.PI;
         if (this.getA() < 0 && this.getB() < 0) {
